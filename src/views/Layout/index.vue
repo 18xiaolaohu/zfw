@@ -1,6 +1,7 @@
 <template>
   <div>
-    <van-tabbar v-model="active">
+    <router-view class="main"></router-view>
+    <van-tabbar route>
       <van-tabbar-item replace to="/home" icon="home-o"
         >首页
         <template #icon>
@@ -34,7 +35,6 @@ export default {
   created () { },
   data () {
     return {
-      active: 0
     }
   },
   methods: {},
@@ -46,10 +46,7 @@ export default {
 </script>
 
 <style scoped lang='less'>
-.van-icon {
-  font-size: 25px;
-}
-/deep/.van-tabbar-item__text {
-  font-size: 15px;
+.main {
+  margin-bottom: 50px;
 }
 </style>
