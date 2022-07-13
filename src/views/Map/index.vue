@@ -1,7 +1,10 @@
 <template>
   <div>
-    <!-- 一级占位符 -->
-    <router-view></router-view>
+    <van-nav-bar title="地图找房" @click-left="$router.back()">
+      <template #left>
+        <van-icon name="arrow-left" />
+      </template>
+    </van-nav-bar>
   </div>
 </template>
 
@@ -20,5 +23,4 @@ export default {
 </script>
 
 <style scoped lang='less'>
-
 </style>

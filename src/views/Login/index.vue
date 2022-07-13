@@ -2,7 +2,7 @@
   <div>
     <!-- 登录-顶部导航栏 -->
     <van-nav-bar title="账号登录" @click-left="$router.back()">
-      <template #left >
+      <template #left>
         <van-icon name="arrow-left" />
       </template>
     </van-nav-bar>
@@ -21,7 +21,12 @@
         placeholder="请输入密码"
       />
       <div style="margin: 16px">
-        <van-button round block native-type="submit" class="login-btn"
+        <van-button
+          round
+          block
+          native-type="submit"
+          class="login-btn"
+          @click="onSuccess"
           >登录</van-button
         >
       </div>
@@ -40,15 +45,24 @@ export default {
     }
   },
   methods: {
+    // 登录获取token值
     async onSubmit (values) {
       console.log('submit', values)
       try {
         const res = await login(values)
         console.log(res)
-        this.$store.commit('setUser', res.data.data)
+        this.$store.commit('setUser', res.data.body)
         this.$router.push({ name: 'my' })
       } catch (err) {
         console.log(err)
+      }
+    },
+    async onSuccess () {
+      try {
+        this.$toast.success('登陆成功')
+      } catch (err) {
+        console.log(err)
+        this.$toast.fail('登陆失败，请重试')
       }
     }
   },

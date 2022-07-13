@@ -6,6 +6,8 @@ const Seek = () => import('@/views/Seek')// 找房
 const Counsel = () => import('@/views/Counsel')// 咨询
 const My = () => import('@/views/My')// 我的
 const Login = () => import('@/views/Login')// 登录
+const Cityist = () => import('@/views/Cityist')
+const Map = () => import('@/views/Map')
 
 Vue.use(VueRouter)
 
@@ -21,7 +23,10 @@ const routes = [
       { path: 'my', component: My, name: 'my' }
     ]
   },
-  { path: '/login', component: Login }
+  { path: '/login', component: Login },
+  { path: '/cityist', component: Cityist },
+  { path: '/map', component: Map }
+
 ]
 
 const router = new VueRouter({

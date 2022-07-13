@@ -7,19 +7,16 @@
     >
       <van-image src="http://liufusong.top:8080/img/avatar.png" />
       <div class="my-info">
-        <van-image
-          width="60px"
-          height="60px"
-          src="http://liufusong.top:8080/img/profile/avatar.png"
-          round
-        />
-        <p>游客</p>
-        <van-button type="primary" size="small" round>退出</van-button>
+        <van-image width="60px" height="60px" :src="userInfo.avatar" round />
+        <p>{{ userInfo.nickname }}</p>
+        <van-button type="primary" size="small" round @click="logout"
+          >退出</van-button
+        >
         <i>编辑个人资料<span>▶</span></i>
       </div>
     </div>
     <!-- 未登录 -->
-    <div class="header header-notlogin" v-else @click="$router.push('/login')">
+    <div class="header header-notlogin" v-else>
       <van-image src="http://liufusong.top:8080/img/profile/bg.png" />
       <div class="my-info">
         <van-image
@@ -29,7 +26,9 @@
           round
         />
         <p>游客</p>
-        <van-button type="primary" size="small">去登录</van-button>
+        <van-button type="primary" size="small" @click="$router.push('/login')"
+          >去登录</van-button
+        >
       </div>
     </div>
     <!-- 6个选项 -->
@@ -72,16 +71,38 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex'
+import { getUserInfo } from '@/api/user'
+import { mapState } from 'vuex'
 export default {
   name: 'My',
-  created () { },
-  data () {
-    return {}
+  async created () {
+    if (this.$store.state.user && this.$store.state.user.token) {
+      try {
+        const res = await getUserInfo()
+        console.log('re1s', res)
+        this.userInfo = res.data.body
+      } catch (err) {
+        console.log(err)
+      }
+    }
   },
-  methods: {},
+  data () {
+    return {
+      userInfo: {}
+    }
+  },
+  methods: {
+    async logout () {
+      try {
+        await this.$dialog.confirm({ message: '确认退出吗' })
+        this.$store.commit('setUser', {})
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  },
   computed: {
-    // ...mapState(['user'])
+    ...mapState(['user'])
   },
   watch: {},
   filters: {},
@@ -167,5 +188,6 @@ export default {
   width: 345px;
   height: 85px;
   margin: 0 auto;
+  box-sizing:unset;
 }
 </style>
